@@ -41,28 +41,29 @@
 
 #include <pcl/point_types.h>
 #include <pcl/io/pcd_io.h>
-#include <pcl/features/normal_3d.h>
-#include <pcl/features/fpfh.h>
-#include <pcl/registration/registration.h>
-#include <pcl/registration/icp.h>
-#include <pcl/registration/joint_icp.h>
-#include <pcl/registration/icp_nl.h>
-#include <pcl/registration/gicp.h>
-#include <pcl/registration/gicp6d.h>
-#include <pcl/registration/transformation_estimation_point_to_plane.h>
-#include <pcl/registration/transformation_validation_euclidean.h>
-#include <pcl/registration/correspondence_rejection_median_distance.h>
-#include <pcl/registration/correspondence_rejection_sample_consensus.h>
-#include <pcl/registration/correspondence_rejection_surface_normal.h>
-#include <pcl/registration/correspondence_estimation_normal_shooting.h>
-#include <pcl/registration/ia_ransac.h>
-#include <pcl/registration/pyramid_feature_matching.h>
-#include <pcl/features/ppf.h>
-#include <pcl/registration/ppf_registration.h>
-#include <pcl/registration/ndt.h>
-#include <pcl/registration/sample_consensus_prerejective.h>
+//#include <pcl/features/normal_3d.h>
+//#include <pcl/features/fpfh.h>
+//#include <pcl/registration/registration.h>
+//#include <pcl/registration/icp.h>
+#include <pcl/registration/cpd.h>
+//#include <pcl/registration/joint_icp.h>
+//#include <pcl/registration/icp_nl.h>
+//#include <pcl/registration/gicp.h>
+//#include <pcl/registration/gicp6d.h>
+//#include <pcl/registration/transformation_estimation_point_to_plane.h>
+//#include <pcl/registration/transformation_validation_euclidean.h>
+//#include <pcl/registration/correspondence_rejection_median_distance.h>
+//#include <pcl/registration/correspondence_rejection_sample_consensus.h>
+//#include <pcl/registration/correspondence_rejection_surface_normal.h>
+//#include <pcl/registration/correspondence_estimation_normal_shooting.h>
+//#include <pcl/registration/ia_ransac.h>
+//#include <pcl/registration/pyramid_feature_matching.h>
+//#include <pcl/features/ppf.h>
+//#include <pcl/registration/ppf_registration.h>
+//#include <pcl/registration/ndt.h>
+//#include <pcl/registration/sample_consensus_prerejective.h>
 // We need Histogram<2> to function, so we'll explicitely add kdtree_flann.hpp here
-#include <pcl/kdtree/impl/kdtree_flann.hpp>
+//#include <pcl/kdtree/impl/kdtree_flann.hpp>
 //(pcl::Histogram<2>)
 
 using namespace pcl;
@@ -72,6 +73,7 @@ using namespace std;
 PointCloud<PointXYZ> cloud_source, cloud_target, cloud_reg;
 PointCloud<PointXYZRGBA> cloud_with_color;
 
+#if 0
 template <typename PointSource, typename PointTarget>
 class RegistrationWrapper : public Registration<PointSource, PointTarget>
 {
@@ -971,6 +973,20 @@ TEST (PCL, PPFRegistration)
   EXPECT_NEAR (transformation(3, 3), 1.000000, 1e-4);
 }
 #endif
+#endif
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+TEST (CPD, CoherentPointDrift)
+{
+  CoherentPointDrift<PointXYZ, PointXYZ> reg;
+  PointCloud<PointXYZ>::ConstPtr source (cloud_source.makeShared ());
+
+  reg.setInputSource (source);
+  reg.setInputTarget (cloud_target.makeShared ());
+
+  // Register
+  reg.align (cloud_reg);
+  EXPECT_EQ (int (cloud_reg.points.size ()), int (cloud_source.points.size ()));
+}
 
 /* ---[ */
 int

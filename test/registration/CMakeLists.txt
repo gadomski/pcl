@@ -21,3 +21,7 @@ PCL_ADD_TEST(correspondence_rejectors test_correspondence_rejectors
              LINK_WITH pcl_gtest pcl_io pcl_registration pcl_features
              ARGUMENTS "${PCL_SOURCE_DIR}/test/bunny.pcd")
 
+PCL_ADD_TEST(registration_cpd_test test_registration_cpd
+             FILES test_registration_cpd.cpp
+             LINK_WITH pcl_gtest pcl_io pcl_registration pcl_features pcl_search pcl_kdtree pcl_kdtree)
+

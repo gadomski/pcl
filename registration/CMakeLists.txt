@@ -69,6 +69,7 @@ if(build)
         "include/pcl/${SUBSYS_NAME}/distances.h"
         "include/pcl/${SUBSYS_NAME}/exceptions.h"
         "include/pcl/${SUBSYS_NAME}/sample_consensus_prerejective.h"
+        "include/pcl/${SUBSYS_NAME}/cpd.h"
         )
 
     set(impl_incs 
@@ -112,6 +113,7 @@ if(build)
         "include/pcl/${SUBSYS_NAME}/impl/transformation_validation_euclidean.hpp"
         "include/pcl/${SUBSYS_NAME}/impl/gicp.hpp"
         "include/pcl/${SUBSYS_NAME}/impl/sample_consensus_prerejective.hpp"
+        "include/pcl/${SUBSYS_NAME}/impl/cpd.hpp"
         )
 
     set(srcs
@@ -155,6 +157,7 @@ if(build)
         src/transformation_estimation_point_to_plane_lls_weighted.cpp
         src/transformation_validation_euclidean.cpp
         src/sample_consensus_prerejective.cpp
+        src/cpd.cpp
         )
 
     set(LIB_NAME "pcl_${SUBSYS_NAME}")
