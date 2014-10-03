@@ -2,8 +2,7 @@
  * Software License Agreement (BSD License)
  *
  *  Point Cloud Library (PCL) - www.pointclouds.org
- *  Copyright (c) 2011-2012, Willow Garage, Inc.
- *  Copyright (c) 2012-, Open Perception, Inc.
+ *  Copyright (c) 2014-, Open Perception, Inc.
  *
  *  All rights reserved.
  *
@@ -33,54 +32,35 @@
  *  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
  *  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
-#ifndef _PCL_IO_BOOST_H_
-#define _PCL_IO_BOOST_H_
+#ifndef PCL_COMMON_COLORS_H
+#define PCL_COMMON_COLORS_H
 
-#if defined __GNUC__
-#  pragma GCC system_header 
-#endif
-#ifndef __CUDACC__
-//https://bugreports.qt-project.org/browse/QTBUG-22829
-#ifndef Q_MOC_RUN
-#include <boost/numeric/conversion/cast.hpp>
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/condition.hpp>
-#include <boost/thread.hpp>
-#include <boost/thread/thread.hpp>
-#include <boost/filesystem.hpp>
-#include <boost/bind.hpp>
-#include <boost/cstdint.hpp>
-#include <boost/function.hpp>
-#include <boost/tuple/tuple.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
-#include <boost/mpl/fold.hpp>
-#include <boost/mpl/inherit.hpp>
-#include <boost/mpl/inherit_linearly.hpp>
-#include <boost/mpl/joint_view.hpp>
-#include <boost/mpl/transform.hpp>
-#include <boost/mpl/vector.hpp>
-#include <boost/algorithm/string.hpp>
-#ifndef Q_MOC_RUN
-#include <boost/date_time/posix_time/posix_time.hpp>
-#endif
-#if BOOST_VERSION >= 104700
-#include <boost/chrono.hpp>
-#endif
-#include <boost/tokenizer.hpp>
-#include <boost/foreach.hpp>
-#include <boost/shared_array.hpp>
-#include <boost/interprocess/sync/file_lock.hpp>
-#if BOOST_VERSION >= 104900
-#include <boost/interprocess/permissions.hpp>
-#endif
-#include <boost/iostreams/device/mapped_file.hpp>
-#define BOOST_PARAMETER_MAX_ARITY 7
-#include <boost/signals2.hpp>
-#include <boost/signals2/slot.hpp>
-#endif
-#endif
-#endif    // _PCL_IO_BOOST_H_
+namespace pcl
+{
+
+  struct RGB;
+
+  /// Color lookup table consisting of 256 colors structured in a maximally
+  /// discontinuous manner. Generated using the method of Glasbey et al.
+  /// (see https://github.com/taketwo/glasbey)
+  extern const unsigned char GLASBEY_LUT[];
+
+  /// Number of colors in Glasbey lookup table
+  extern const unsigned int GLASBEY_LUT_SIZE;
+
+  /** Get a color from Glasbey lookup table with a given id.
+    *
+    * The id should be less than \c GLASBEY_LUT_SIZE. */
+  RGB
+  getGlasbeyColor (unsigned int color_id);
+
+  RGB
+  getRandomColor (double min = 0.2, double max = 2.8);
+
+}
+
+#endif /* PCL_COMMON_COLORS_H */
 
